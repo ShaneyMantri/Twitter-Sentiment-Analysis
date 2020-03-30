@@ -1,0 +1,34 @@
+{%  extends 'sentiment_app/base.html'%}
+
+
+{% block content %}
+
+<section id="profile" class="section-padding wow fadeInUp delay-05s">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="service-title pad-bt15">Profile Based Tweet Analyser</h2>
+            <p class="sub-title pad-bt15">Enables user to analyse tweets based on Profiles</p>
+            <a href = "#">Click here to analyse based on profile</a>
+            <hr class="bottom-line">
+          </div>
+      </div>
+      </div>
+    </section>
+
+    <section id="keyword1" class="section-padding wow fadeInUp delay-05s">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="service-title pad-bt15">Keyword Based Search</h2>
+            <p class="sub-title pad-bt15">Enables users to analyse tweets based on keywords or Hash Tags.<br>Useful to know in what <sentiment></sentiment>s a keyword is trending</p>
+            <a href = "{% url 'Keywordsearch' %}">Click here to analyse based on keywords</a>
+            <hr class="bottom-line">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
+

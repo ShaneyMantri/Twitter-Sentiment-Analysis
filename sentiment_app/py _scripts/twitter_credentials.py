@@ -1,0 +1,8 @@
+#Variables used to store the credentials of the Twitter API.
+
+
+ACCESS_TOKEN =  "3166547498-ObqFuywFjjhB2suhn1hVgGkrJIXuKYyH01zMapA"
+ACCESS_TOKEN_SECRET = "ZeIcA5aBO43R8tSKxbfy1XkcwVUv2qmeXRRF1kbIb55w2"
+CONSUMER_API_KEY = "Hr7gZpjyYKnaJTn4fLINRMzlt"
+CONSUMER_API_KEY_SECRET = "EyD5EqJa9x3NInX3PwUE3Xgjtuz0UwAtUcCke8v88IBIyIs2Jq"
+MAX_COUNT_MODE_1 = 100

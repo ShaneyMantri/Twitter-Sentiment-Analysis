@@ -1,0 +1,26 @@
+{% extends 'sentiment_app/base.html' %}
+
+{% block content %}
+
+    <section id="keyword1" class="section-padding wow fadeInUp delay-05s">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="service-title pad-bt15">Keyword Based Search</h2>
+            <p class="sub-title pad-bt15">Enables users to analyse tweets based on keywords or Hash Tags.<br>Useful to know in what emotion a keyword is trending</p>
+              <form method="POST">
+              {% csrf_token %}
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">keywords</label>
+                            <input class="form-control" id="keywords" placeholder="eg. Narendra Modi"  >
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+            <hr class="bottom-line">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
