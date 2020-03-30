@@ -6,10 +6,10 @@ import json
 from tweepy import Cursor, Stream, API  # Cursor used for timeline tweets on our profile, friend's profile
 from tweepy import OAuthHandler  # Used for authentication
 from tweepy.streaming import StreamListener  # Used to listen to tweet based on keywords or hash tags
-import twitter_credentials  # For twitter API credentials
+from . import twitter_credentials  # For twitter API credentials
 from textblob import TextBlob
 import re  # Regex module
-import sentiment_mod as s
+# from . import sentiment_mod as s
 
 """Twitter Client"""
 class TwitterClient:
@@ -152,7 +152,6 @@ class TweetAnalyser():
         tweets = []
         for i in range(len(tweets_dict)):
             tweets.append(tweets_dict[i])
-        print("Reached DF mode 1")
         df = pd.DataFrame([tweet['text'] for tweet in tweets], columns=["tweet"])
         df['id'] = np.array([tweet['id'] for tweet in tweets])
         df['len'] = np.array([len(tweet['text']) for tweet in tweets])
@@ -160,7 +159,6 @@ class TweetAnalyser():
         df['source'] = np.array([tweet['source'] for tweet in tweets])
         df['likes'] = np.array([tweet['favorite_count'] for tweet in tweets])
         df['retweets'] = np.array([tweet['retweet_count'] for tweet in tweets])
-        print("Leaving DF mode 1")
         return df
 
 
@@ -196,6 +194,51 @@ class TweetAnalyser():
         plt.show()  # Combining plots for likes and retweets
 
 
+
+def keyword_analyse(keywords):
+    tweet_analyser = TweetAnalyser()
+    # keyword_list = ["donald trump", "hillary clinton", "barak obama","bernie sanders"]  # list of keywords or hash tags for filtering tweets
+    fetched_tweets_filename = "tweets.json"  # File for writing the tweets
+    twitter_streamer = TwitterStreamer()
+    twitter_streamer.stream_tweets(fetched_tweets_filename,
+                                   keywords)  # Creating and passing args to a streamer object
+    tweetsList = []
+    with open('tweets.json') as f:
+        data = json.loads(f.read())
+
+    df = tweet_analyser.tweets_to_dataframe_mode1(data)
+    df['sentiment'] = np.array([tweet_analyser.analyse_sentiment(tweet) for tweet in df['tweet']])
+    df = list(df.T.to_dict().values())
+    return df
+
+
+
+
+
+def profile_analyse(screen_name, count):
+    tweet_analyser = TweetAnalyser()
+    twitter_client = TwitterClient()
+    api = twitter_client.get_twitter_client_api()  # get the api for referencing
+
+    tweets = api.user_timeline(screen_name=screen_name,
+                               count=count)  # screen_name = user and count = number of tweets
+    # print(tweets[0].text)
+    # print(type(tweets[0]))
+    df = tweet_analyser.tweets_to_dataframe_mode2(tweets)
+    df['sentiment'] = np.array([tweet_analyser.analyse_sentiment(tweet) for tweet in df['tweet']])
+    df = list(df.T.to_dict().values())
+    return df
+    # print(dir(tweets[0]))  # gives list of parameters that can be accessed just like tweet.text
+    # print(tweets[0].retweet_count)
+    #
+    # """We can find out average length of count of tweets"""
+    # print(np.mean(df['len']))
+    #
+    # """Get number of likes of the most liked tweets"""
+    # print(np.max(df['likes']))
+    #
+    # """Get the number of retweets for the most retweeted tweets"""
+    # print(np.max(df['retweets']))
 
 
 if __name__ == "__main__":
@@ -249,6 +292,6 @@ if __name__ == "__main__":
     df['sentiment'] = np.array([tweet_analyser.analyse_sentiment(tweet) for tweet in df['tweet']])
 
 
-    df['sentiment_mod'] = np.array([tweet_analyser.analyse_with_sentiment_mode(tweet) for tweet in df['tweet']])
+    df['sentiment'] = np.array([tweet_analyser.analyse_sentiment(tweet) for tweet in df['tweet']])
 
     print(df.head(10))

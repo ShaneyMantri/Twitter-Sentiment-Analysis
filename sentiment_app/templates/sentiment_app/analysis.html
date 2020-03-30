@@ -1,0 +1,47 @@
+{% extends 'sentiment_app/base.html '%}
+
+{% block content %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+<table style=" margin:10px">
+  <tr>
+    <th>ID</th>
+    <th>Length</th>
+    <th>Date</th>
+    <th>Likes</th>
+    <th>Re-tweets</th>
+    <th>Tweet</th>
+    <th>Sentiment</th>
+
+  </tr>
+{% for x in context %}
+
+  <tr>
+    <td>{{ x.id }}</td>
+    <td>{{ x.len }}</td>
+    <td>{{ x.date }}</td>
+    <td>{{ x.likes }}</td>
+    <td>{{ x.retweets }}</td>
+    <td>{{ x.tweet }}</td>
+    <td>{{ x.sentiment }}</td>
+
+  </tr>
+ {% endfor %}
+</table>
+{% endblock %}
