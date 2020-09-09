@@ -228,18 +228,6 @@ def profile_analyse(screen_name, count):
     df['sentiment'] = np.array([tweet_analyser.analyse_sentiment(tweet) for tweet in df['tweet']])
     df = list(df.T.to_dict().values())
     return df
-    # print(dir(tweets[0]))  # gives list of parameters that can be accessed just like tweet.text
-    # print(tweets[0].retweet_count)
-    #
-    # """We can find out average length of count of tweets"""
-    # print(np.mean(df['len']))
-    #
-    # """Get number of likes of the most liked tweets"""
-    # print(np.max(df['likes']))
-    #
-    # """Get the number of retweets for the most retweeted tweets"""
-    # print(np.max(df['retweets']))
-
 
 if __name__ == "__main__":
     tweet_analyser = TweetAnalyser()
@@ -255,37 +243,15 @@ if __name__ == "__main__":
 
 
         df = tweet_analyser.tweets_to_dataframe_mode1(data)
-        # print(df.head(6))
-
-        # print(data[0]['id'])
-        # print(data[1]['id'])
-
-
 
 
 
     elif mode==2:
-        # twitter_client = TwitterClient("pycon")
-        # print(twitter_client.get_user_timeline_tweets(1))
         twitter_client = TwitterClient()
         api = twitter_client.get_twitter_client_api()  # get the api for referencing
 
         tweets = api.user_timeline(screen_name="realDonaldTrump", count=200)  # screen_name = user and count = number of tweets
-        # print(tweets[0].text)
-        # print(type(tweets[0]))
         df = tweet_analyser.tweets_to_dataframe_mode2(tweets)
-        # print(df.head(6))
-        # print(dir(tweets[0]))  # gives list of parameters that can be accessed just like tweet.text
-        # print(tweets[0].retweet_count)
-        #
-        # """We can find out average length of count of tweets"""
-        # print(np.mean(df['len']))
-        #
-        # """Get number of likes of the most liked tweets"""
-        # print(np.max(df['likes']))
-        #
-        # """Get the number of retweets for the most retweeted tweets"""
-        # print(np.max(df['retweets']))
 
 
     """Creating another column for sentiment analysis for each tweet"""
